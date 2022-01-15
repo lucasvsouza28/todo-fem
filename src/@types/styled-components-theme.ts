@@ -19,6 +19,7 @@ declare module 'styled-components' {
         input: string;
         active: string;
         inactive: string;
+        hover: string;
       }
     }
   }

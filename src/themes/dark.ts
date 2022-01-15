@@ -11,7 +11,8 @@ const theme: DefaultTheme = {
       secondary: '#4e5065',
       input: '#75778c',
       active: '#507ddf',
-      inactive: '#60617d'
+      inactive: '#60617d',
+      hover: '#FFF',
     }
   },
   image: {

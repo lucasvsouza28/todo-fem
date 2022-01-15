@@ -28,6 +28,7 @@ export const TodoList = () => {
             {todo.text}
           </SC.Text>
           <SC.RemoveItemButton
+            className='remove-button'
             onClick={() => removeItem(todo.id)}
           >
             <RemoveSvg />
@@ -40,7 +41,9 @@ export const TodoList = () => {
           <SC.ItemsLeft>{getPendingItemsCount()} items left</SC.ItemsLeft>
           <SC.ClearCompleteButton
             onClick={removeDoneItems}
-          >Clear Complete</SC.ClearCompleteButton>
+          >
+            Clear Complete
+          </SC.ClearCompleteButton>
         </SC.ItemsStatus>
       )}
 

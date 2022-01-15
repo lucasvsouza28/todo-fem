@@ -20,4 +20,8 @@ export const ToggleFilterButton = styled.button<{ active: boolean }>`
   border: none;
   font-weight: bold;
   cursor: pointer;
+
+  &:hover {
+    color: ${ props => props.theme.color.text.hover };
+  }
 `;

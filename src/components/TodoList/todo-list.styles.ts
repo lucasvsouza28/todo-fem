@@ -13,10 +13,20 @@ export const TodoItem = styled.div<{ done: boolean }>`
   justify-content: space-between;
   padding: 1rem;
   background-color: ${ props => props.theme.color.element };
-  border-bottom: 1px solid #e6e5ea;
+  border-bottom: 1px solid ${ props => props.theme.color.text.secondary };;
   font-size: 0.8rem;
   color: ${ props => props.done ? props.theme.color.text.secondary : props.theme.color.text.primary };
   text-decoration: ${ props => props.done ? 'line-through' : ''};
+
+  .remove-button {
+    display: none;
+  }
+
+  &:hover {
+    .remove-button {
+      display: block;
+    }
+  }
 
   &:first-child{
     border-top-left-radius: 8px;
@@ -70,6 +80,9 @@ export const ItemsLeft = styled.div`
 export const ClearCompleteButton = styled.button`
   background: transparent;
   border: none;
-  color: ${ props => props.theme.color.text.input };
   font-size: 12px;
+  color: ${ props => props.theme.color.text.input };
+  &:hover {
+    color: ${ props => props.theme.color.text.hover };
+  }
 `;

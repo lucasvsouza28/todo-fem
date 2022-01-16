@@ -14,7 +14,7 @@ export const Input = styled.input`
   border: none;
   padding: 0 1rem;
   flex: 1;
-  color: ${props => props.theme.color.text.input};
+  color: ${props => props.theme.color.text.primary};
 
   &:focus {
     border: none;

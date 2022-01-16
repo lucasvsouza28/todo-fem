@@ -7,9 +7,10 @@ export const CreateTodo = () => {
   const [newTodo, setNewTodo] = useState<string>('')
 
   const handleSubmit = (e: FormEvent) => {
+    e.preventDefault();
+
     if (!newTodo) return;
 
-    e.preventDefault();
     createTodo(newTodo);
     setNewTodo('');
   }

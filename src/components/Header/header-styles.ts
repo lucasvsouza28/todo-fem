@@ -17,11 +17,17 @@ export const Title = styled.h1`
   letter-spacing: 0.5rem;
 `;
 
-export const InnerContainer = styled.main`
-  padding: 2rem;
+export const InnerContainer = styled.div`
+  padding: 2rem 0;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 90%;
+  margin: 0 auto;
+
+  @media(min-width: 768px){
+    width: 750px;
+  }
 `;
 
 export const ThemeSwitcher = styled.button`

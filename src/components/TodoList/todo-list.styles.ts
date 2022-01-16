@@ -1,10 +1,9 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  padding: 0 2rem;
   display: flex;
   flex-direction: column;
-  margin-top: -4rem;
+  margin-top: -2rem;
 `;
 
 export const TodoItem = styled.div<{ done: boolean }>`
@@ -70,6 +69,8 @@ export const ItemsStatus = styled.div`
   padding: 1rem;
   justify-content: space-between;
   align-items: center;
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 9px;
 `;
 
 export const ItemsLeft = styled.div`

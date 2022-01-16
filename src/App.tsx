@@ -1,3 +1,4 @@
+import styled from 'styled-components';
 import { useState } from "react";
 import { DefaultTheme, ThemeProvider } from "styled-components"
 import { Header } from "./components/Header"
@@ -16,11 +17,22 @@ function App() {
         <GlobalStyle />
         <TodoListContextProvider>
           <Header currentTheme={theme} setTheme={setTheme} />
-          <TodoList />
-          <TodoFilters />
+          <AppContainer>
+            <TodoList />
+            <TodoFilters />
+          </AppContainer>
       </TodoListContextProvider>
     </ThemeProvider>
   )
 }
+
+const AppContainer = styled.main`
+  width: 90%;
+  margin: 0 auto;
+
+  @media (min-width: 768px) {
+    width: 750px;
+  }
+`;
 
 export default App

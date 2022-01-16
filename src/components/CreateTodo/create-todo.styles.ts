@@ -6,7 +6,7 @@ export const Container = styled.form`
   width: 100%;
   display: flex;
   border-radius: 8px;
-  margin-top: -2em;
+  margin-bottom: 2rem;
 `;
 
 export const Input = styled.input`

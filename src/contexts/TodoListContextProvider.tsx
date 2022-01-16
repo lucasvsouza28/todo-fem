@@ -32,35 +32,39 @@ export const TodoListContextProvider = ({
   const [filteredItems, setFilteredItems] = useState<Todo[]>([]);
   const [currentFilter, setCurrentFilter] = useState<'all' | 'active' | 'completed'>('all');
 
-  const createTodo = (text: string) => {
+  const STORAGE_KEY: string = '_ARTP_ITEMS_';
+
+  const persistItems = () => localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+
+  const createTodo = (text: string) =>
     setItems(state => [{
       id: (new Date().getTime()).toString(),
       text,
       done: false,
     }, ...state]);
-  };
 
   const toggleDone = (id: string) => {
-    const filter = (item: Todo) => item.id === id
-    const idx = items.findIndex(filter);
-    const item = items.find(filter);
+    const item = items.find(item => item.id === id);
 
     setItems(state => [...state.map(i => ( i.id === id ? { ...item, done: !item?.done } as Todo : i))]);
   };
 
-  const removeItem = (id: string) => {
-    setItems(state => [...state.filter(i => i.id !== id)]);
-  };
+  const removeItem = (id: string) => setItems(state => [...state.filter(i => i.id !== id)]);
 
   const removeDoneItems = () => setItems(state => [...state.filter(i => !i.done)]);
 
   const getPendingItemsCount = () => items.filter(i => !i.done).length;
 
-  const changeFilter = (filter: 'all' | 'active' | 'completed') => {
-    setCurrentFilter(filter);
-  }
+  const changeFilter = (filter: 'all' | 'active' | 'completed') => setCurrentFilter(filter);
 
   const filterItems = () => setFilteredItems([...items.filter(item => currentFilter === 'active' ? !item.done : currentFilter === 'completed' ? item.done : true)]);
+
+  useEffect(() => {
+    const storageItems = localStorage.getItem(STORAGE_KEY);
+    if (storageItems) {
+      setItems(JSON.parse(storageItems));
+    }
+  }, []);
 
   useEffect(() => {
     filterItems();
@@ -68,7 +72,8 @@ export const TodoListContextProvider = ({
 
   useEffect(() => {
     filterItems();
-  }, [items])
+    persistItems();
+  }, [items]);
 
   return (
     <context.Provider value={{

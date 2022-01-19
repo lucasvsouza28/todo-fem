@@ -1,10 +1,6 @@
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react';
-
-type Todo = {
-  id: string;
-  text: string;
-  done: boolean;
-};
+import { DropResult } from 'react-beautiful-dnd';
+import { Todo } from '../@types/todo';
 
 type TodoListContextType = {
   items: Todo[];
@@ -16,6 +12,8 @@ type TodoListContextType = {
   removeItem: (id: string) => void;
   removeDoneItems: () => void;
   getPendingItemsCount: () => number;
+
+  reorderItem: (result: DropResult) => void;
 };
 
 type TodoListContextProviderProps = {
@@ -59,6 +57,22 @@ export const TodoListContextProvider = ({
 
   const filterItems = () => setFilteredItems([...items.filter(item => currentFilter === 'active' ? !item.done : currentFilter === 'completed' ? item.done : true)]);
 
+  const reorderItem = (result: DropResult) => {
+    if (!result.destination) {
+      return;
+    }
+
+    if (result.destination.index === result.source.index) {
+      return;
+    }
+
+    const reorderedItems = Array.from(items);
+    const [removed] = reorderedItems.splice(result.source.index, 1);
+    reorderedItems.splice(result.destination.index, 0, removed);
+
+    setItems(reorderedItems);
+  };
+
   useEffect(() => {
     const storageItems = localStorage.getItem(STORAGE_KEY);
     if (storageItems) {
@@ -85,6 +99,7 @@ export const TodoListContextProvider = ({
       removeItem,
       removeDoneItems,
       getPendingItemsCount,
+      reorderItem
     }}>
       {children}
     </context.Provider>

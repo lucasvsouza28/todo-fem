@@ -1,40 +1,44 @@
-// @ts-ignore
-import RemoveSvg from '../../assets/icon-cross.svg?component';
-// @ts-ignore
-import CheckSvg from '../../assets/icon-check.svg?component';
-
+import { DragDropContext, Droppable } from 'react-beautiful-dnd';
 import * as SC from './todo-list.styles';
 import { useTodoListContext } from '../../contexts/TodoListContextProvider';
+import { TodoItem } from "../TodoItem";
 
 export const TodoList = () => {
-  const { items, toggleDone, removeItem, removeDoneItems, getPendingItemsCount } = useTodoListContext();
+  const {
+    items,
+    removeDoneItems,
+    getPendingItemsCount,
+    reorderItem,
+  } = useTodoListContext();
 
   return (
     <SC.Container>
-
-      { items.map((todo, i) => (
-        <SC.TodoItem
-          key={'todo_' + i}
-          done={todo.done}
-          onClick={() => toggleDone(todo.id)}
+      <DragDropContext
+        onDragEnd={reorderItem}
+      >
+        <Droppable
+          droppableId="list"
         >
-          <SC.CheckButton
-            onClick={() => toggleDone(todo.id)}
-            done={todo.done}
-          >
-            <CheckSvg />
-          </SC.CheckButton>
-          <SC.Text>
-            {todo.text}
-          </SC.Text>
-          <SC.RemoveItemButton
-            className='remove-button'
-            onClick={() => removeItem(todo.id)}
-          >
-            <RemoveSvg />
-          </SC.RemoveItemButton>
-        </SC.TodoItem>
-      ))}
+          {provided => (
+            <div
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+            >
+              { items.map((todo, index) => (
+
+                <TodoItem
+                  key={todo.id}
+                  todo={todo}
+                  index={index}
+                />
+
+              ))}
+              {provided.placeholder}
+            </div>
+          )}
+
+        </Droppable>
+      </DragDropContext>
 
       {items.length > 0 && (
         <SC.ItemsStatus>
@@ -46,7 +50,6 @@ export const TodoList = () => {
           </SC.ClearCompleteButton>
         </SC.ItemsStatus>
       )}
-
     </SC.Container>
   )
 }
